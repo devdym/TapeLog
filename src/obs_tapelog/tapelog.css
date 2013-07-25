@@ -1,0 +1,95 @@
+/* 
+    Document   : tapelog
+    Created on : Feb 27, 2013, 8:10:06 PM
+    Author     : dmitriypatsiliandra
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.theme {
+    master-color: grey;
+    -fx-background-color: derive(master-color, 70%);
+    -fx-font-size: 14px;
+}
+
+.tapeTable .table-row-cell {
+    -fx-font: 1em "Arial";
+    -fx-background-insets: 0;
+}
+
+.tapeTable .column-header{
+    -fx-font: 1em "Arial";
+}
+
+.propLabel{
+	-fx-text-fill: #AAAAAA;
+	-fx-font: 0.833333em "Arial";
+        
+}
+
+.button {
+    -fx-background-color:
+        linear-gradient(
+            derive(master-color, 120%), 
+            derive(master-color, 90%)
+        ),
+        radial-gradient(
+            center 50% -40%, 
+            radius 180%, 
+            derive(master-color, 95%) 55%, 
+            derive(master-color, 75%) 55%
+        );
+    -fx-background-radius: 4, 3;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.55) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: derive(grey, -60%);
+    -fx-padding: 3 11 3 11;
+}
+
+.propTextField {
+    -fx-background-insets: 0;
+    -fx-font: 1em "Arial";
+    -fx-padding: 0;
+    -fx-background-color: white;
+    -fx-font-size: 18;
+}
+
+.descriptionValue {
+    -fx-background-color: white;
+    -fx-font: 1.166666em "Arial";
+    -fx-font-size: 18;
+ }
+
+.descriptionValue:focused {
+    -fx-background-color: -fx-focus-color, transparent, white;
+} 
+
+.descriptionValue:hover {
+    -fx-background-color: -fx-focus-color, -fx-text-box-border, white;
+}
+
+.dark {
+    -fx-base: #333333;
+}
+.blackList {
+    -fx-background-color:#333333;
+}
+
+.roundedAnchorPane {
+    -fx-border-radius:10 10 10 10;
+    -fx-border-color: #d6d6d6;
+    -fx-border-width: 0.083333em;
+}
+
+blackList {
+    -fx-background-color:#333333;
+}
+
+.blackList .list-cell {
+    -fx-padding: 6 0 0 13;
+    -fx-background-color: #333333;
+    -fx-text-fill: lightgrey;
+}
+
+.blackList .list-cell:focused {
+    -fx-text-fill: red;
+}

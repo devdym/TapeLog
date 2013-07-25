@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="891.0" prefWidth="1200.0" styleClass="theme" xmlns:fx="http://javafx.com/fxml" fx:controller="obs_tapelog.TapeLogController">
+  <children>
+    <AnchorPane prefHeight="45.0" prefWidth="1200.0" AnchorPane.bottomAnchor="846.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <Button id="" fx:id="SettingsBtn" alignment="CENTER" contentDisplay="CENTER" layoutX="1152.0" layoutY="5.0" mnemonicParsing="false" onAction="#SettingsButtonAction" prefHeight="32.0" prefWidth="34.0">
+          <tooltip>
+            <Tooltip text="Printer, Label, App Settings" />
+          </tooltip>
+        </Button>
+        <MenuButton id="PrintBtn" fx:id="TapeLabelBtn" layoutX="293.0" layoutY="10.0" mnemonicParsing="false" text="Tape Label">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#PrintTape" text="Print on the ROLL" />
+            <MenuItem mnemonicParsing="false" onAction="#PrintLabelButtonAction" text="Print on the PAGE" />
+          </items>
+          <tooltip>
+            <Tooltip text="Print Tapes Labels" />
+          </tooltip>
+        </MenuButton>
+        <MenuButton fx:id="BoxLabelBtn" layoutX="184.0" layoutY="10.0" mnemonicParsing="false" text="Box Label">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#BoxLabelsButtonAction" text="Print on the ROLL" />
+            <MenuItem mnemonicParsing="false" onAction="#BoxLabelsPageButtonAction" text="Print on the PAGE" />
+          </items>
+        </MenuButton>
+        <MenuButton id="PrintTapeLogBtn" fx:id="TapeLogBtn" layoutX="78.0" layoutY="10.0" mnemonicParsing="false" text="Tape Log">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#ExportToCSV" text="Export to CSV" />
+            <MenuItem mnemonicParsing="false" onAction="#PrintTapeLogButtonAction" text="Print" />
+          </items>
+        </MenuButton>
+        <Button fx:id="ImportBtn" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#ImportButtonAction" text="Import">
+          <tooltip>
+            <Tooltip text="Import xml file from Seal" />
+          </tooltip>
+        </Button>
+        <Label fx:id="StatusMassagelabel" layoutX="428.0" layoutY="16.0" prefWidth="649.0" />
+      </children>
+    </AnchorPane>
+    <SplitPane fx:id="mainWindow" dividerPositions="0.09265442404006678" focusTraversable="true" prefHeight="846.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="45.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <ListView id="boxList" fx:id="boxListView" prefHeight="859.0000999999975" prefWidth="108.0" styleClass="blackList" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <contextMenu>
+                <ContextMenu>
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#PrintTapeLogButtonAction" text="Print Tape Log" />
+                    <MenuItem mnemonicParsing="false" onAction="#QdeleteBox" text="Delete Box" />
+                  </items>
+                </ContextMenu>
+              </contextMenu>
+            </ListView>
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="850.0" prefWidth="826.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <children>
+                <SplitPane dividerPositions="0.6995249406175772" focusTraversable="true" orientation="VERTICAL" prefHeight="523.0" prefWidth="1032.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <items>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <TableView fx:id="TapeLogView" prefHeight="561.0" prefWidth="1082.0" styleClass="tapeTable" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="Tape" fx:id="Tape_c" />
+                            <TableColumn text="Line Name" fx:id="LineName_c">
+                              <prefWidth>
+                                <Long fx:value="130" />
+                              </prefWidth>
+                            </TableColumn>
+                            <TableColumn prefWidth="75.0" text="SEQ" fx:id="Seq_c" />
+                            <TableColumn prefWidth="75.0" text="FF" fx:id="FF_c" />
+                            <TableColumn prefWidth="75.0" text="LF" fx:id="LF_c" />
+                            <TableColumn prefWidth="75.0" text="FSP" fx:id="FSP_c" />
+                            <TableColumn prefWidth="75.0" text="LSP" fx:id="LSP_c" />
+                            <TableColumn text="Date" fx:id="date_c">
+                              <prefWidth>
+                                <Long fx:value="100" />
+                              </prefWidth>
+                            </TableColumn>
+                            <TableColumn prefWidth="75.0" text="Heading" fx:id="head_c" />
+                            <TableColumn text="Comments" fx:id="Comm_c">
+                              <prefWidth>
+                                <Long fx:value="300" />
+                              </prefWidth>
+                            </TableColumn>
+                          </columns>
+                          <contextMenu>
+                            <ContextMenu>
+                              <items>
+                                <MenuItem mnemonicParsing="false" onAction="#PrintTape" text="Print on the ROLL" />
+                                <MenuItem mnemonicParsing="false" onAction="#PrintLabelButtonAction" text="Print on the PAGE" />
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem mnemonicParsing="false" onAction="#NewButtonAction" text="New Tape" />
+                                <MenuItem mnemonicParsing="false" onAction="#DeleteTapeButtonAction" text="Delete Tape" />
+                              </items>
+                            </ContextMenu>
+                          </contextMenu>
+                        </TableView>
+                        <Label fx:id="Box_info" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="1082.0" textAlignment="CENTER" AnchorPane.bottomAnchor="561.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane fx:id="comments" maxWidth="1.7976931348623157E308" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <children>
+                        <AnchorPane id="AnchorPane" layoutX="381.0" layoutY="61.0" prefHeight="164.0" prefWidth="268.0" styleClass="roundedAnchorPane">
+                          <children>
+                            <GridPane fx:id="info" alignment="CENTER" prefHeight="159.20000000000005" prefWidth="265.60002441406255" AnchorPane.bottomAnchor="2.4" AnchorPane.leftAnchor="2.4" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.4">
+                              <children>
+                                <Label alignment="CENTER" styleClass="propLabel" text="DATE" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <TextField id="heading" fx:id="date" prefWidth="200.0" styleClass="descriptionValue" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <Label alignment="CENTER" styleClass="propLabel" text="HEADING" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <TextField fx:id="heading" prefWidth="200.0" styleClass="descriptionValue" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label styleClass="propLabel" text="SEQ" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <TextField fx:id="SEQ" prefWidth="152.0" styleClass="descriptionValue" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label styleClass="propLabel" text="BOX NUMBER" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                <ComboBox fx:id="boxNb_CB" onAction="#SaveTapeNbAction" prefHeight="24.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                  <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                      <String fx:value="Item 1" />
+                                      <String fx:value="Item 2" />
+                                      <String fx:value="Item 3" />
+                                    </FXCollections>
+                                  </items>
+                                </ComboBox>
+                              </children>
+                              <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="97.00000762939453" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="164.99999237060547" minWidth="10.0" prefWidth="151.99999237060547" />
+                              </columnConstraints>
+                              <rowConstraints>
+                                <RowConstraints maxHeight="36.0" minHeight="9.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="36.0" minHeight="9.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="36.0" minHeight="9.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                              </rowConstraints>
+                            </GridPane>
+                          </children>
+                          <padding>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x1" />
+                          </padding>
+                        </AnchorPane>
+                        <HBox alignment="CENTER" layoutX="14.0" layoutY="16.0" padding="$x1" prefHeight="37.0" prefWidth="634.0" styleClass="roundedAnchorPane">
+                          <children>
+                            <Label prefHeight="15.999908447265625" styleClass="propLabel" text="TAPE" />
+                            <TextField fx:id="tape" prefWidth="111.0" styleClass="descriptionValue" />
+                            <Label styleClass="propLabel" text="LINE NAME" />
+                            <TextField fx:id="lineName" prefWidth="329.0" styleClass="descriptionValue" />
+                            <CheckBox fx:id="NTBP" mnemonicParsing="false" onAction="#SaveTapeButtonAction" text="NTBP" textFill="#202020" />
+                          </children>
+                        </HBox>
+                        <AnchorPane id="AnchorPane" layoutX="14.0" layoutY="61.0" minHeight="65.0" padding="$x1" prefHeight="72.0" prefWidth="358.0" styleClass="roundedAnchorPane">
+                          <children>
+                            <GridPane id="files_sp" alignment="CENTER" prefHeight="59.599999999999994" prefWidth="345.9999633789063" AnchorPane.bottomAnchor="6.2" AnchorPane.leftAnchor="6.2" AnchorPane.rightAnchor="13.8" AnchorPane.topAnchor="6.2">
+                              <children>
+                                <Label styleClass="propLabel" text="FF" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <Label styleClass="propLabel" text="LF" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                <Label styleClass="propLabel" text="FSP" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <Label styleClass="propLabel" text="LSP" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                <TextField fx:id="FF" prefWidth="200.0" styleClass="descriptionValue" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <TextField fx:id="LF" prefWidth="200.0" styleClass="descriptionValue" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                                <TextField fx:id="FSP" prefWidth="200.0" styleClass="descriptionValue" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField fx:id="LSP" prefWidth="200.0" styleClass="descriptionValue" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              </children>
+                              <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="39.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="326.00000381469727" minWidth="10.0" prefWidth="120.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="46.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.99998474121094" minWidth="10.0" prefWidth="149.0" />
+                              </columnConstraints>
+                              <rowConstraints>
+                                <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                              </rowConstraints>
+                            </GridPane>
+                          </children>
+                        </AnchorPane>
+                        <VBox layoutX="14.0" layoutY="145.0" padding="$x1" prefHeight="80.0" prefWidth="358.0" styleClass="roundedAnchorPane">
+                          <children>
+                            <Label prefWidth="143.0" styleClass="propLabel" text="COMMENTS" />
+                            <TextArea fx:id="Comments_" prefHeight="65.0" prefWidth="638.0" styleClass="descriptionValue" wrapText="true" />
+                          </children>
+                        </VBox>
+                      </children>
+                      <maxHeight>
+                        <Long fx:value="250" />
+                      </maxHeight>
+                      <minHeight>
+                        <Long fx:value="250" />
+                      </minHeight>
+                    </AnchorPane>
+                  </items>
+                </SplitPane>
+                <AnchorPane id="AnchorPane" layoutX="725.0" layoutY="355.0" styleClass="roundedAnchorPane" />
+              </children>
+            </AnchorPane>
+          </children>
+        </AnchorPane>
+      </items>
+      <maxWidth>
+        <Long fx:value="-1" />
+      </maxWidth>
+      <minWidth>
+        <Long fx:value="1200" />
+      </minWidth>
+    </SplitPane>
+    <StackPane fx:id="spane" prefHeight="850.0" prefWidth="1200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <Region fx:id="Dilog" prefHeight="850.0" prefWidth="1200.0" />
+        <Pane fx:id="DilogBox" prefHeight="623.0" prefWidth="940.0">
+          <children>
+            <Button layoutX="254.0" layoutY="201.0" mnemonicParsing="false" onAction="#DeleteBoxButtonAction" text="Yep" />
+            <Button layoutX="333.0" layoutY="201.0" mnemonicParsing="false" onAction="#QdeleteBoxClose" text="leave it" />
+            <Label layoutX="188.0" layoutY="116.0" text="Are you sure you whant to delete it?" />
+          </children>
+          <effect>
+            <DropShadow height="62.67485119047619" radius="30.853236607142854" spread="0.06349206349206349" width="62.738095238095234" />
+          </effect>
+          <StackPane.margin>
+            <Insets bottom="300.0" left="300.0" right="300.0" top="300.0" />
+          </StackPane.margin>
+        </Pane>
+      </children>
+    </StackPane>
+    <StackPane id="shadow" fx:id="settingsWindow" prefHeight="889.0" prefWidth="1200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <Region fx:id="DilogSet" prefHeight="200.0" prefWidth="200.0" />
+        <Pane fx:id="DilogBoxSet" prefHeight="200.0" prefWidth="200.0">
+          <children>
+            <GridPane prefHeight="677.0" prefWidth="986.0">
+              <children>
+                <Label text="Printer IP" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label text="Master Copies" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label text="Copy Copies" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label text="Company" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Label text="Client" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <Label text="Job Number" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                <Label text="Area" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                <Label text="Format" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                <Label text="Recording Length" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                <Label text="Sample rate" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                <TextField id="printerip" fx:id="printerip_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <TextField id="Mater_nb" fx:id="Master_nb_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <TextField id="Copy_nb" fx:id="Copy_nb_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                <TextField id="Company" fx:id="Company_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                <TextField id="Client" fx:id="Client_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                <TextField id="Job_nb" fx:id="Job_nb_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                <TextField id="Area" fx:id="Area_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                <TextField id="Fromat" fx:id="Format_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                <TextField id="Rec" fx:id="Rec_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                <TextField id="Sample" fx:id="Sample_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+                <TextField id="Heading_d" fx:id="Heading_d_TF" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                <TextField id="Heading_i" fx:id="Heading_i_TF" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                <Label alignment="CENTER_RIGHT" prefWidth="94.0" text="Heading inc" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                <Label alignment="CENTER_RIGHT" prefWidth="94.0" text="Heading dec" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                <Label text="Vessel" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                <TextField id="Vessel" fx:id="Vessel_TF" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+                <Label text="ms" GridPane.columnIndex="3" GridPane.rowIndex="11" />
+                <Label text="ms" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+                <Label text="deg" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                <Label text="deg" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                <Label text="Author: Dym Patsiliandra" GridPane.columnIndex="2" GridPane.rowIndex="13" />
+                <Label prefHeight="37.0" prefWidth="242.0" text="Support: dpatsiliandra@gmail.com" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="14" />
+                <Button mnemonicParsing="false" onAction="#SaveSettingsButton" prefWidth="94.0" text="Save" GridPane.columnIndex="6" GridPane.rowIndex="14" />
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="20.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="0.0" prefWidth="126.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="356.0" minWidth="10.0" prefWidth="292.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="265.0" minWidth="10.0" prefWidth="39.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="313.0" minWidth="10.0" prefWidth="101.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="364.0" minWidth="0.0" prefWidth="78.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="433.0" minWidth="10.0" prefWidth="101.0" />
+              </columnConstraints>
+              <padding>
+                <Insets left="10.0" />
+              </padding>
+              <rowConstraints>
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+          </children>
+          <StackPane.margin>
+            <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
+          </StackPane.margin>
+        </Pane>
+      </children>
+    </StackPane>
+  </children>
+  <minHeight>
+    <Long fx:value="542" />
+  </minHeight>
+  <stylesheets>
+    <URL value="@tapelog.css" />
+  </stylesheets>
+</AnchorPane>
