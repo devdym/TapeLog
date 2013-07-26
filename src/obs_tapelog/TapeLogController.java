@@ -1059,9 +1059,11 @@ public class TapeLogController implements Initializable {
                     os.print(label_SC);
                     System.out.println("label_SC");
                 }
-                for (int i=1; i<=qu; i++) {
-                    os.print(label_SD);
-                    System.out.println("label_SD");
+                if(copy_nb>=2){
+                    for (int i=1; i<=qu; i++) {
+                        os.print(label_SD);
+                        System.out.println("label_SD");
+                    }
                 }
                 os.flush( );
                 StatusMassagelabel.setText("Labels are printed.");
